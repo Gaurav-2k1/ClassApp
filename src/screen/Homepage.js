@@ -6,10 +6,10 @@ import { firebase } from '../firebase';
 const Homepage = () => {
 
     const [tiledata, setTile] = useState([]);
-    const [id, setid] = useState([]);
-    const [ongoing,setongoing] = useState("first");
+    // const [id, setid] = useState([]);
+    // const [ongoing,setongoing] = useState("first");
     const getdatatile = async () => {
-        var tile = [];
+
         await firebase.firestore()
             .collection("tt").doc("Nov 3").collection("data").get().then(
                 docsnapshot => {
@@ -29,7 +29,7 @@ const Homepage = () => {
             console.log(tiledata);
 
         })
-    }, [])
+    }, [tiledata])
     return (
         <MainDiv>
             <SideBar>
