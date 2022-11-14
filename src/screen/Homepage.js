@@ -14,6 +14,7 @@ const Homepage = () => {
     }])    // const [id, setid] = useState([]);
     // const [ongoing,setongoing] = useState("first");
     const [day, setday] = useState("Monday");
+    setday("Monday");
 
     const getlec = async () => {
         await firebase.firestore().collection("tt").doc("Nov 3").collection("data").where("day", "==", `${day}`).get().then(
@@ -29,10 +30,7 @@ const Homepage = () => {
             });
     };
     useEffect(() => {
-        getlec().then(() => {
-            console.log("calleds");
-
-        })
+        getlec();
     }, [])
     return (
         <MainDiv>

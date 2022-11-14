@@ -41,7 +41,7 @@ const Clock = () => {
     setInterval(updateTime, 1000);
 
 
-
+    console.log(hr + min + sec);
     return (
         <ClockBlock>
             <h1>{day + "day"}</h1>
