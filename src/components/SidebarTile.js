@@ -9,7 +9,7 @@ const SidebarTile = ({ data }) => {
             </OngoingTab>
             <Data>
                 <h4>00:00</h4>
-                <h1>{data.first}</h1>
+                <h1>{data}</h1>
             </Data>
         </SideBarTile>
 

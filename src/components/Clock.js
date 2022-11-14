@@ -1,17 +1,57 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-
 const Clock = () => {
+
+    let time = new Date().toLocaleTimeString();
+
+    const [currentTime, setCurrentTime] = useState(time);
+    const weekDay = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'may', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+    const [day, setday] = useState("...");
+    const [month, setmonth] = useState("...");
+    const [date, setdate] = useState("...");
+    const [year, setyear] = useState("")
+    const [hr, sethr] = useState("");
+    const [min, setmin] = useState("");
+    const [sec, setsec] = useState("");
+
+    const updateTime = () => {
+        const d = new Date()
+        let time = new Date().toLocaleTimeString();
+
+        const day = weekDay[d.getDay()];
+        const month = months[d.getMonth()];
+        const year = d.getFullYear()
+        const date = d.getDate();
+        let hr = d.getHours();
+        let min = d.getMinutes();
+        let sec = d.getSeconds();
+        setCurrentTime(time);
+        setday(day);
+        setdate(date);
+        setyear(year);
+        setmonth(month);
+        sethr(hr);
+        setmin(min);
+        setsec(sec);
+
+
+
+    }
+    setInterval(updateTime, 1000);
+
+
+
     return (
         <ClockBlock>
-            <h1>MONDAY</h1>
+            <h1>{day + "day"}</h1>
             <DateBlock>
-                <h2>DD</h2>
-                <h2>MM</h2>
-                <h2>YY</h2>
+                <h2>{date}</h2>
+                <h2>{month}</h2>
+                <h2>{year}</h2>
             </DateBlock>
             <RealtimeClock>
-                00:00:00
+                {currentTime}
             </RealtimeClock>
         </ClockBlock>)
 };

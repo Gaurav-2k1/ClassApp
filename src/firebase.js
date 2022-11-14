@@ -8,7 +8,7 @@ const firebaseConfig = {
     projectId: "classapp-bea16",
     storageBucket: "classapp-bea16.appspot.com",
     messagingSenderId: "1662330043",
-    appId: "1:1662330043:web:d1b22cb6c4ea708008359e"
+    appId: "1:1662330043:web:0d188e2e6ad6db1c08359e"
 };
 
 // Initialize Firebase

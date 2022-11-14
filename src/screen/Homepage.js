@@ -5,41 +5,51 @@ import SidebarTile from '../components/SidebarTile';
 import { firebase } from '../firebase';
 const Homepage = () => {
 
-    const [tiledata, setTile] = useState([]);
-    // const [id, setid] = useState([]);
+    const [lecture, setlecture] = useState([{
+        first: "",
+        second: "",
+        third: "",
+        fourth: "",
+        fifth: ""
+    }])    // const [id, setid] = useState([]);
     // const [ongoing,setongoing] = useState("first");
-    const getdatatile = async () => {
+    const [day, setday] = useState("Monday");
 
-        await firebase.firestore()
-            .collection("tt").doc("Nov 3").collection("data").get().then(
-                docsnapshot => {
-                    const tile = [];
-                    docsnapshot.forEach((doc) => {
-                        const tiledoc = doc.data();
-                        tile.push(tiledoc);
-                    });
-                    setTile(tile);
+    const getlec = async () => {
+        await firebase.firestore().collection("tt").doc("Nov 3").collection("data").where("day", "==", `${day}`).get().then(
+            docsnapshot => {
+                const tile = [];
+                docsnapshot.forEach((doc) => {
+                    const tiledoc = doc.data();
+                    tile.push(tiledoc);
 
-                }
-            );
-
-    }
+                });
+                console.log(tile);
+                setlecture(tile);
+            });
+    };
     useEffect(() => {
-        getdatatile().then(() => {
-            console.log(tiledata);
+        getlec().then(() => {
+            console.log("calleds");
 
         })
-    }, [tiledata])
+    }, [])
     return (
         <MainDiv>
             <SideBar>
-                {
-                    tiledata.map((data) => {
-                        return (
-                            <SidebarTile key={data.id} data={data} />
-                        )
-                    })
-                }
+
+                <SidebarTile data={lecture[0].first} />
+                <SidebarTile data={lecture[0].second} />
+
+                <SidebarTile data={lecture[0].third} />
+
+                <SidebarTile data="Break" />
+
+                <SidebarTile data={lecture[0].fourth} />
+                <SidebarTile data={lecture[0].fifth} />
+
+
+
                 <SidebarT>
                     <h3>
                         00:00
