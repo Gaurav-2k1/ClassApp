@@ -1,17 +1,58 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components'
+import { setsubjectInfo } from '../features/subjectSlice';
+const SidebarTiles = ({ data }) => {
+    let time = new Date().toLocaleTimeString();
+    const [info, setinfo] = useState()
+    const [currentTime, setCurrentTime] = useState(time);
+    const [cur, setcur] = useState(false)
+    const dispatch = useDispatch();
 
-const SidebarTile = ({ data }) => {
+    const setsubject = () => {
+        dispatch(setsubjectInfo({
+            subject: info
+        }))
+    }
+    const updateTime = () => {
+        let time = new Date().toLocaleTimeString();
+        setCurrentTime(time);
+        // console.log(currentTime)
+        if (currentTime >= data.startTime && currentTime <= data.endTime) {
+            setcur(true)
+            setinfo(data.subject)
+            setsubject()
+        }
+    }
+    setInterval(updateTime, 1000);
+    useState(() => {
+        updateTime()
+    }, [])
+
     return (
-        <SideBarTile>
-            <OngoingTab>
-                <h2>ONGOING</h2>
-            </OngoingTab>
-            <Data>
-                <h4>00:00</h4>
-                <h1>{data}</h1>
-            </Data>
-        </SideBarTile>
+        <>
+            {
+                cur ?
+                    <SideBarTile>
+                        <OngoingTab>
+                            <h2>ONGOING</h2>
+                        </OngoingTab>
+                        <Data>
+                            <h4>{data.startTime}</h4>
+                            <h1>{data.subject}</h1>
+                        </Data>
+                    </SideBarTile> :
+                    <SidebarT>
+                        <h3>
+                            {data.startTime}
+                        </h3>
+                        <h3>
+                            {data.subject}
+                        </h3>
+                    </SidebarT>
+            }
+        </>
+
 
     )
 }
@@ -76,4 +117,23 @@ font-size: 15px;
         text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     }
 `
-export default SidebarTile
+
+
+
+const SidebarT = styled.div`
+    height:10%;
+    width:100%;
+    margin:1rem 0;
+    display:flex;
+    flex-direction:row;
+    padding:0 20px;
+    justify-content: space-around;
+    align-items:center;
+    background: rgba(217, 217, 217, 0.56);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    color:white;
+    font-weight:bold;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+`
+export default SidebarTiles

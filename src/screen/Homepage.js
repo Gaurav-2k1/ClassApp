@@ -1,93 +1,60 @@
+import { collection, getDocs, query } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components'
 import DataBar from '../components/DataBar';
-import SidebarTile from '../components/SidebarTile';
-import { firebase } from '../firebase';
+import SidebarTiles from '../components/SidebarTile';
+import { db } from '../firebase';
 const Homepage = () => {
 
-    const [lecture, setlecture] = useState([{
-        first: "",
-        second: "",
-        third: "",
-        fourth: "",
-        fifth: ""
-    }])    // const [id, setid] = useState([]);
-    // const [ongoing,setongoing] = useState("first");
-    const [day, setday] = useState("Monday");
-    setday("Monday");
 
-    const getlec = async () => {
-        await firebase.firestore().collection("tt").doc("Nov 3").collection("data").where("day", "==", `${day}`).get().then(
-            docsnapshot => {
-                const tile = [];
-                docsnapshot.forEach((doc) => {
-                    const tiledoc = doc.data();
-                    tile.push(tiledoc);
+    const [lec, setlec] = useState([])
+    // const weekDay = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
+    const getlecd = async () => {
+        var tile = [];
+        const docref = query(collection(db, "users", `WUocfWFZ80d1zL5lRUkBNOAqzLp2`, "timetables", `Cus`, `Monday`));
+        const snapshot = await getDocs(docref)
+        snapshot.forEach((doc) => {
+            tile.push(doc.data())
+        })
+        setlec(tile);
+        console.log(tile)
 
-                });
-                console.log(tile);
-                setlecture(tile);
-            });
     };
+
+    // const getlec = async () => {
+    //     let d = new Date();
+    //     let dayyy = weekDay[d.getDay()] + "day";
+    //     console.log(dayyy);
+
+    //     await firebase.firestore().collection("tt").doc("Day").collection("data").where("day", "==", `${dayyy}`).get().then(
+    //         docsnapshot => {
+    //             const tile = [];
+    //             docsnapshot.forEach((doc) => {
+    //                 const tiledoc = doc.data();
+    //                 tile.push(tiledoc);
+
+    //             });
+    //             console.log(tile);
+    //             setlecture(tile);
+    //         });
+    // };
     useEffect(() => {
-        getlec();
+        // getlec();
+        getlecd()
     }, [])
     return (
         <MainDiv>
             <SideBar>
+                {
+                    lec.map((data, i) => {
+                        return (
+                            <SidebarTiles key={i} data={data} />
 
-                <SidebarTile data={lecture[0].first} />
-                <SidebarTile data={lecture[0].second} />
+                        )
 
-                <SidebarTile data={lecture[0].third} />
+                    })
+                }
 
-                <SidebarTile data="Break" />
-
-                <SidebarTile data={lecture[0].fourth} />
-                <SidebarTile data={lecture[0].fifth} />
-
-
-
-                <SidebarT>
-                    <h3>
-                        00:00
-                    </h3>
-                    <h3>
-                        IOT
-                    </h3>
-                </SidebarT>
-                <SidebarT>
-                    <h3>
-                        00:00
-                    </h3>
-                    <h3>
-                        IOT
-                    </h3>
-                </SidebarT>
-                <SidebarT>
-                    <h3>
-                        00:00
-                    </h3>
-                    <h3>
-                        IOT
-                    </h3>
-                </SidebarT>
-                <SidebarT>
-                    <h3>
-                        00:00
-                    </h3>
-                    <h3>
-                        IOT
-                    </h3>
-                </SidebarT>
-                <SidebarT>
-                    <h3>
-                        00:00
-                    </h3>
-                    <h3>
-                        IOT
-                    </h3>
-                </SidebarT>
 
             </SideBar>
             <DataBar />
@@ -116,22 +83,5 @@ const SideBar = styled.div`
 
 
 
-
-const SidebarT = styled.div`
-    height:10%;
-    width:100%;
-    margin:1rem 0;
-    display:flex;
-    flex-direction:row;
-    padding:0 20px;
-    justify-content: space-around;
-    align-items:center;
-    background: rgba(217, 217, 217, 0.56);
-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-border-radius: 15px;
-color:white;
-font-weight:bold;
-text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-`
 
 export default Homepage;

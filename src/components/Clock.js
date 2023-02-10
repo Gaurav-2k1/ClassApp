@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-const Clock = () => {
+const Clock = ({ setdaym }) => {
 
     let time = new Date().toLocaleTimeString();
 
@@ -10,11 +10,7 @@ const Clock = () => {
     const [day, setday] = useState("...");
     const [month, setmonth] = useState("...");
     const [date, setdate] = useState("...");
-    const [year, setyear] = useState("")
-    const [hr, sethr] = useState("");
-    const [min, setmin] = useState("");
-    const [sec, setsec] = useState("");
-
+    const [year, setyear] = useState("");
     const updateTime = () => {
         const d = new Date()
         let time = new Date().toLocaleTimeString();
@@ -23,25 +19,23 @@ const Clock = () => {
         const month = months[d.getMonth()];
         const year = d.getFullYear()
         const date = d.getDate();
-        let hr = d.getHours();
-        let min = d.getMinutes();
-        let sec = d.getSeconds();
+
         setCurrentTime(time);
         setday(day);
         setdate(date);
         setyear(year);
         setmonth(month);
-        sethr(hr);
-        setmin(min);
-        setsec(sec);
 
-
+    }
+    const setdayfun = () => {
+        let dayy = day + "day";
+        setdaym(dayy);
 
     }
     setInterval(updateTime, 1000);
+    setInterval(setdayfun,86400000)
+    
 
-
-    console.log(hr + min + sec);
     return (
         <ClockBlock>
             <h1>{day + "day"}</h1>
@@ -61,8 +55,8 @@ const Clock = () => {
 const ClockBlock = styled.div`
     position:absolute;
     right:10px;
-    height:50%;
-    width:30%;
+    height:50vh;
+    width:20vw;
 top: -19px;
 
 background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), rgba(102, 173, 122, 0.2);

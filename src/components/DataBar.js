@@ -1,22 +1,54 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Clock from './Clock';
 import { BsCircleFill } from 'react-icons/bs'
-const DataBar = () => {
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../firebase';
+import { useSelector } from 'react-redux';
+import { selectChannelId } from '../features/subjectSlice';
+const DataBar = ({ setdaym, subject }) => {
+    const [subinfo, setsubinfo] = useState()
+    const sub = useSelector(selectChannelId);
+    console.log(sub)
+    const getInfo = async () => {
+        var tile = [];
+        const docref = query(collection(db, "users", `WUocfWFZ80d1zL5lRUkBNOAqzLp2`, "timetables", `Cus`, `Monday`), where("subject", "==", `${sub}`));
+        const snapshot = await getDocs(docref)
+        snapshot.forEach((doc) => {
+            tile.push(doc.data())
+        })
+        setsubinfo(tile);
+        console.log(tile);
+    };
+
+    useState(() => {
+        getInfo()
+    }, [])
+    // console.log(subinfo)
     return (
         <DataBars>
-        
+
             <Circlediv>
                 <BsCircleFill className='circleIcon' />
                 <BsCircleFill className='circleIcon' />
                 <BsCircleFill className='circleIcon' />
 
             </Circlediv>
-            <Clock />
+            <Clock setdaym={setdaym} />
             <MainDataBlock>
-                <h1>Subject : IOT</h1>
-                <h1>Shweta Suryawanshi</h1>
-                <h2>Attendance : 00</h2>
+                {
+                    sub ? <>
+                        <h1>Subject : {subinfo.subject}</h1>
+                        <h1>{subinfo.teacher}</h1>
+                        <h2>Attendance : 00</h2>
+                    </> :
+                        <>
+                            <div>
+                                <h1>No Data Found</h1>
+                            </div>
+                        </>
+                }
+
 
             </MainDataBlock>
             <Upcoming>
@@ -95,4 +127,6 @@ const Circlediv = styled.div`
         color:#D9D9D9
     }
     `
+
+
 export default DataBar
