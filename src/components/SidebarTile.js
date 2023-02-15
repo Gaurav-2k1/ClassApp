@@ -1,13 +1,13 @@
-import { doc, setDoc } from 'firebase/firestore';
+// import { doc, setDoc } from 'firebase/firestore';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components'
 import { selectChannelId, setsubjectInfo } from '../features/subjectSlice';
-import { db } from '../firebase';
+// import { db } from '../firebase';
 import { useRef } from 'react';
 const SidebarTiles = ({ data }) => {
     let time = new Date().toLocaleTimeString();
-    const [info, setinfo] = useState()
+    // const [info, setinfo] = useState()
     const [currentTime, setCurrentTime] = useState(time);
     const [cur, setcur] = useState(false)
     const dispatch = useDispatch();
@@ -23,9 +23,9 @@ const SidebarTiles = ({ data }) => {
     //         teacher: data.teacher
     //     });
     // };
-    const [status, setstatus] = useState()
+    // const [status, setstatus] = useState()
     const [coloro, setcolor] = useState(false)
-    const col = useRef()
+    // const col = useRef()
     const subjectSlice = useSelector(selectChannelId);
 
     const updateTime = () => {
