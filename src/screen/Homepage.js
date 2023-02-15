@@ -87,6 +87,7 @@ const Homepage = () => {
     useEffect(() => {
         // getlec();
         getShow()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     return (
         <MainDiv>
