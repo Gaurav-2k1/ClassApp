@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Clock from './Clock';
 import { BsCircleFill } from 'react-icons/bs'
-import { collection, doc, getDocs, onSnapshot, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useSelector } from 'react-redux';
 import { selectChannelId } from '../features/subjectSlice';
@@ -10,7 +10,7 @@ const DataBar = ({ dayr, customname }) => {
     const [subinfo, setsubinfo] = useState()
     const sub = useSelector(selectChannelId);
     // console.log(re)
-    const [subj, setsubj] = useState("");
+    // const [subj, setsubj] = useState("");
     const getlecdata = async () => {
         var tile = [];
         const docref = query(collection(db, "users", `zJlS7kWn6yMxRuNCv8dgDOhnMAN2`, "timetables", `${customname}`, `${dayr.current}`), where("subject", "==", `${sub}`));
@@ -38,8 +38,8 @@ const DataBar = ({ dayr, customname }) => {
     // };
 
     useEffect(() => {
-        // sub && getlecdata()
-    }, [sub])
+        getlecdata()
+    }, [])
 
     console.log(sub)
     return (

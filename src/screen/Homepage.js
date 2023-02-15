@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, onSnapshot, query } from 'firebase/firestore';
+import { collection, doc, onSnapshot, query } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components'
 import DataBar from '../components/DataBar';
@@ -17,11 +17,11 @@ const Homepage = () => {
     // const weekDay = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
     const [notice, setNotice] = useState()
     const getlecd = async () => {
-        const docref = onSnapshot(doc(db, "users", `zJlS7kWn6yMxRuNCv8dgDOhnMAN2`, "web", "docu"), (doc) => {
+        onSnapshot(doc(db, "users", `zJlS7kWn6yMxRuNCv8dgDOhnMAN2`, "web", "docu"), (doc) => {
             customname.current = doc.data().customname
 
             const docref = query(collection(db, "users", `zJlS7kWn6yMxRuNCv8dgDOhnMAN2`, "timetables", `${customname.current}`, `Monday`));
-            const unsubscribe = onSnapshot(docref, (querySnapshot) => {
+            onSnapshot(docref, (querySnapshot) => {
                 var tile = [];
 
                 querySnapshot.forEach((doc) => {
@@ -59,7 +59,7 @@ const Homepage = () => {
     //         });
     // };
     const getShow = async () => {
-        const docref = onSnapshot(doc(db, "users", `zJlS7kWn6yMxRuNCv8dgDOhnMAN2`, "show", "setShow"), (doc) => {
+        onSnapshot(doc(db, "users", `zJlS7kWn6yMxRuNCv8dgDOhnMAN2`, "show", "setShow"), (doc) => {
             console.log(doc.data().show)
             if (doc.data().show === "TimeTable") {
                 getlecd()
@@ -78,7 +78,7 @@ const Homepage = () => {
 
     };
     const getnotice = async () => {
-        const docref = onSnapshot(doc(db, "users", `zJlS7kWn6yMxRuNCv8dgDOhnMAN2`, "Notice", "setNotice"), (doc) => {
+        onSnapshot(doc(db, "users", `zJlS7kWn6yMxRuNCv8dgDOhnMAN2`, "Notice", "setNotice"), (doc) => {
             // console.log(doc.data())
             // console.log(doc.data())
             setNotice(doc.data().notice)
