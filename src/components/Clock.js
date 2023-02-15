@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-const Clock = ({ setdaym }) => {
+const Clock = ({ dayr }) => {
 
     let time = new Date().toLocaleTimeString();
 
     const [currentTime, setCurrentTime] = useState(time);
-    const weekDay = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
+    const weekDay = ['Sun', 'Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Sat'];
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'may', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
     const [day, setday] = useState("...");
     const [month, setmonth] = useState("...");
@@ -29,12 +29,12 @@ const Clock = ({ setdaym }) => {
     }
     const setdayfun = () => {
         let dayy = day + "day";
-        setdaym(dayy);
+        dayr.current = dayy;
 
     }
     setInterval(updateTime, 1000);
-    setInterval(setdayfun,86400000)
-    
+    setInterval(setdayfun, 86400000)
+
 
     return (
         <ClockBlock>

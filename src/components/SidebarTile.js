@@ -1,27 +1,87 @@
+import { doc, setDoc } from 'firebase/firestore';
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components'
-import { setsubjectInfo } from '../features/subjectSlice';
+import { selectChannelId, setsubjectInfo } from '../features/subjectSlice';
+import { db } from '../firebase';
+import { useRef } from 'react';
 const SidebarTiles = ({ data }) => {
     let time = new Date().toLocaleTimeString();
     const [info, setinfo] = useState()
     const [currentTime, setCurrentTime] = useState(time);
     const [cur, setcur] = useState(false)
     const dispatch = useDispatch();
-
+    var lec = useRef()
     const setsubject = () => {
         dispatch(setsubjectInfo({
-            subject: info
+            subject: lec.current
         }))
     }
+    // const change = async () => {
+    //     await setDoc(doc(db, "users", `WUocfWFZ80d1zL5lRUkBNOAqzLp2`, "currentTT", "set"), {
+    //         subject: data.subject,
+    //         teacher: data.teacher
+    //     });
+    // };
+    const [status, setstatus] = useState()
+    const [coloro, setcolor] = useState(false)
+    const col = useRef()
+    const subjectSlice = useSelector(selectChannelId);
+
     const updateTime = () => {
         let time = new Date().toLocaleTimeString();
         setCurrentTime(time);
-        // console.log(currentTime)
+
         if (currentTime >= data.startTime && currentTime <= data.endTime) {
-            setcur(true)
-            setinfo(data.subject)
-            setsubject()
+            // // console.log(data.subject)
+            // // console.log(re.current)
+            // if(re.current!==data.subject){
+            //     re.current = data.subject
+            //     console.log(data.subject)
+            // }
+
+            if (subjectSlice === null) {
+                let locsub = data.subject
+                lec.current = locsub
+                setsubject()
+            } else if (subjectSlice !== data.subject) {
+
+                let locsub = data.subject
+                lec.current = locsub
+                setsubject()
+                // console.log(subjectSlice)
+
+
+            } else {
+                console.log()
+            }
+            // lec.current = data.subject
+            // console.log(subjectSlice, " ", data.subject, " ", lec.current)
+
+            if (coloro !== true) {
+                setcolor(true)
+
+                // console.log("set")
+
+            }
+            if (cur !== true) {
+                setcur(true)
+
+            }
+            // setinfo(data.subject)
+            // setsubject()
+
+        }
+        else if (currentTime >= data.endTime) {
+            // setcur(false)
+            var curr = coloro;
+            if (curr === true && cur === true) {
+                setcolor(false)
+                setcur(false)
+                // console.log("rem")
+
+            }
+
         }
     }
     setInterval(updateTime, 1000);
@@ -31,32 +91,42 @@ const SidebarTiles = ({ data }) => {
 
     return (
         <>
-            {
-                cur ?
-                    <SideBarTile>
-                        <OngoingTab>
-                            <h2>ONGOING</h2>
-                        </OngoingTab>
-                        <Data>
-                            <h4>{data.startTime}</h4>
-                            <h1>{data.subject}</h1>
-                        </Data>
-                    </SideBarTile> :
-                    <SidebarT>
-                        <h3>
-                            {data.startTime}
-                        </h3>
-                        <h3>
-                            {data.subject}
-                        </h3>
-                    </SidebarT>
-            }
+            {cur ?
+                <SideBarTileBox data={data} coloro={coloro} /> :
+                <SidebarTNot data={data} />}
         </>
 
 
     )
 }
 
+const SideBarTileBox = ({ data, coloro }) => {
+    return (
+        <SideBarTile coloro={coloro}>
+
+            <OngoingTab coloro={coloro}>
+                <h2>{coloro ? "Ongoing" : "Finished"}</h2>
+            </OngoingTab>
+            <Data>
+                <h4>{data.startTime}</h4>
+                <h1>{data.subject}</h1>
+            </Data>
+        </SideBarTile>
+    )
+}
+
+const SidebarTNot = ({ data }) => {
+    return (
+        <SidebarT>
+            <h3>
+                {data.startTime}
+            </h3>
+            <h3>
+                {data.subject}
+            </h3>
+        </SidebarT>
+    )
+}
 
 const SideBarTile = styled.div`
    cursor:pointer;
@@ -83,7 +153,7 @@ const OngoingTab = styled.div`;
     display:flex;
     justify-content:flex-start;
     align-items:center;
-    background: linear-gradient(180deg, rgba(5, 83, 201, 0.2) 0%, rgba(36, 255, 0, 0.2) 100%), #6CCC92;
+    background:${({ coloro }) => (coloro ? 'linear-gradient(180deg, rgba(5, 83, 201, 0.2) 0%, rgba(36, 255, 0, 0.2) 100%), #6CCC92' : 'linear-gradient(90deg, rgba(21,20,36,1) 1%, rgba(136,9,9,1) 52%, rgba(255,0,108,1) 98%)')}; 
     box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
 

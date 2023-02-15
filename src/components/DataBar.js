@@ -1,32 +1,49 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Clock from './Clock';
 import { BsCircleFill } from 'react-icons/bs'
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, doc, getDocs, onSnapshot, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useSelector } from 'react-redux';
 import { selectChannelId } from '../features/subjectSlice';
-const DataBar = ({ setdaym, subject }) => {
+const DataBar = ({ dayr, customname }) => {
     const [subinfo, setsubinfo] = useState()
     const sub = useSelector(selectChannelId);
-    console.log(sub)
-    const getInfo = async () => {
+    // console.log(re)
+    const [subj, setsubj] = useState("");
+    const getlecdata = async () => {
         var tile = [];
-        const docref = query(collection(db, "users", `WUocfWFZ80d1zL5lRUkBNOAqzLp2`, "timetables", `Cus`, `Monday`), where("subject", "==", `${sub}`));
+        const docref = query(collection(db, "users", `zJlS7kWn6yMxRuNCv8dgDOhnMAN2`, "timetables", `${customname}`, `${dayr.current}`), where("subject", "==", `${sub}`));
         const snapshot = await getDocs(docref)
         snapshot.forEach((doc) => {
             tile.push(doc.data())
         })
-        setsubinfo(tile);
-        console.log(tile);
-    };
+        console.log(tile)
+        console.log("called")
+        setsubinfo(tile)
 
-    useState(() => {
-        getInfo()
-    }, [])
-    // console.log(subinfo)
+    };
+    // const getInfo = async () => {
+    //     const docref = onSnapshot(doc(db, "users", `WUocfWFZ80d1zL5lRUkBNOAqzLp2`, "currentTT", `set`,));
+    //     const unsubscribe = onSnapshot(docref, (querySnapshot) => {
+    //         var tile = [];
+
+    //         querySnapshot.forEach((doc) => {
+    //             console.log(doc.data())
+    //             tile.push(doc.data())
+    //         });
+    //         setsubj(tile);
+    //         console.log(tile)
+    //     });
+    // };
+
+    useEffect(() => {
+        // sub && getlecdata()
+    }, [sub])
+
+    console.log(sub)
     return (
-        <DataBars>
+        <DataBars >
 
             <Circlediv>
                 <BsCircleFill className='circleIcon' />
@@ -34,10 +51,10 @@ const DataBar = ({ setdaym, subject }) => {
                 <BsCircleFill className='circleIcon' />
 
             </Circlediv>
-            <Clock setdaym={setdaym} />
+            <Clock dayr={dayr} />
             <MainDataBlock>
                 {
-                    sub ? <>
+                    subinfo ? <>
                         <h1>Subject : {subinfo.subject}</h1>
                         <h1>{subinfo.teacher}</h1>
                         <h2>Attendance : 00</h2>

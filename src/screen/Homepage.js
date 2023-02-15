@@ -1,25 +1,45 @@
-import { collection, getDocs, query } from 'firebase/firestore';
+import { collection, doc, getDocs, onSnapshot, query } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components'
 import DataBar from '../components/DataBar';
 import SidebarTiles from '../components/SidebarTile';
 import { db } from '../firebase';
+import { useRef } from 'react';
+
 const Homepage = () => {
 
 
     const [lec, setlec] = useState([])
+    const sub = useRef("");
+    const customname = useRef("");
+    const [showd, setShowd] = useState(true)
+    const dayr = useRef()
     // const weekDay = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
+    const [notice, setNotice] = useState()
     const getlecd = async () => {
-        var tile = [];
-        const docref = query(collection(db, "users", `WUocfWFZ80d1zL5lRUkBNOAqzLp2`, "timetables", `Cus`, `Monday`));
-        const snapshot = await getDocs(docref)
-        snapshot.forEach((doc) => {
-            tile.push(doc.data())
+        const docref = onSnapshot(doc(db, "users", `zJlS7kWn6yMxRuNCv8dgDOhnMAN2`, "web", "docu"), (doc) => {
+            customname.current = doc.data().customname
+
+            const docref = query(collection(db, "users", `zJlS7kWn6yMxRuNCv8dgDOhnMAN2`, "timetables", `${customname.current}`, `Monday`));
+            const unsubscribe = onSnapshot(docref, (querySnapshot) => {
+                var tile = [];
+
+                querySnapshot.forEach((doc) => {
+                    // console.log(doc.data())
+                    tile.push(doc.data())
+                });
+                setlec(tile);
+                console.log(tile)
+            });
         })
-        setlec(tile);
-        console.log(tile)
+
+        // const snapshot = await getDocs(docref)
+        // snapshot.forEach((doc) => {
+        //     tile.push(doc.data())
+        // })
 
     };
+
 
     // const getlec = async () => {
     //     let d = new Date();
@@ -38,26 +58,65 @@ const Homepage = () => {
     //             setlecture(tile);
     //         });
     // };
+    const getShow = async () => {
+        const docref = onSnapshot(doc(db, "users", `zJlS7kWn6yMxRuNCv8dgDOhnMAN2`, "show", "setShow"), (doc) => {
+            console.log(doc.data().show)
+            if (doc.data().show === "TimeTable") {
+                getlecd()
+                setShowd(true)
+            } else {
+                getnotice()
+                setShowd(false)
+            }
+
+        })
+
+        // const snapshot = await getDocs(docref)
+        // snapshot.forEach((doc) => {
+        //     tile.push(doc.data())
+        // })
+
+    };
+    const getnotice = async () => {
+        const docref = onSnapshot(doc(db, "users", `zJlS7kWn6yMxRuNCv8dgDOhnMAN2`, "Notice", "setNotice"), (doc) => {
+            // console.log(doc.data())
+            // console.log(doc.data())
+            setNotice(doc.data().notice)
+        })
+    }
     useEffect(() => {
         // getlec();
-        getlecd()
+        getShow()
     }, [])
     return (
         <MainDiv>
-            <SideBar>
-                {
-                    lec.map((data, i) => {
-                        return (
-                            <SidebarTiles key={i} data={data} />
+            {
+                showd ? <>
+                    <SideBar>
+                        {
+                            lec.length > 0 ?
+                                lec.map((data, i) => {
+                                    return (
+                                        <SidebarTiles key={i} data={data} sub={sub} />
 
-                        )
+                                    )
+                                }) :
+                                <>
+                                    <h1 className='text-3xl text-white h-full '>No Data Found</h1>
+                                </>
+                        }
 
-                    })
-                }
 
+                    </SideBar>
+                    <DataBar sub={sub} dayr={dayr} customname={customname} />
+                </> :
+                    <div className='h-full w-full flex items-center justify-center bg-[#330303]'>
+                        <h1 className='text-white text-7xl text-center'>
+                            {notice}
+                        </h1>
+                    </div>
+            }
 
-            </SideBar>
-            <DataBar />
         </MainDiv>
     )
 }
