@@ -56,8 +56,8 @@ const ClockBlock = styled.div`
     position:absolute;
     right:10px;
     height:50vh;
-    width:20vw;
-top: -19px;
+    width:30vw;
+    top: -19px;
 
 background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), rgba(102, 173, 122, 0.2);
 border: 1px solid #686464;
@@ -68,7 +68,7 @@ flex-direction:column;
 justify-content:center;
 align-items:center;
 h1{
-    font-size:2.5rem;
+    font-size:2rem;
     color:white;
     margin:1rem 0;
     font-weight:bold;
