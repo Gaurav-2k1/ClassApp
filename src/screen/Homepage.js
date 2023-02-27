@@ -13,14 +13,19 @@ const Homepage = () => {
     const sub = useRef("");
     const customname = useRef("");
     const [showd, setShowd] = useState(true)
-    const dayr = useRef()
-    // const weekDay = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
+    const dayr = useRef("")
+    const weekDay = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
     const [notice, setNotice] = useState()
+    const loginuid = useRef()
+    loginuid.current = localStorage.getItem("email")
     const getlecd = async () => {
-        onSnapshot(doc(db, "users", `zJlS7kWn6yMxRuNCv8dgDOhnMAN2`, "web", "docu"), (doc) => {
-            customname.current = doc.data().customname
+        onSnapshot(doc(db, "users", `${loginuid.current}`, "web", "docu"), (doc) => {
+            customname.current = doc.data().customname;
+            const d = new Date()
 
-            const docref = query(collection(db, "users", `zJlS7kWn6yMxRuNCv8dgDOhnMAN2`, "timetables", `${customname.current}`, `Monday`));
+            const day = weekDay[d.getDay()] + "day";
+            // console.log(day)
+            const docref = query(collection(db, "users", `${loginuid.current}`, "timetables", `${customname.current}`, `${day}`));
             onSnapshot(docref, (querySnapshot) => {
                 var tile = [];
 
@@ -41,25 +46,8 @@ const Homepage = () => {
     };
 
 
-    // const getlec = async () => {
-    //     let d = new Date();
-    //     let dayyy = weekDay[d.getDay()] + "day";
-    //     console.log(dayyy);
-
-    //     await firebase.firestore().collection("tt").doc("Day").collection("data").where("day", "==", `${dayyy}`).get().then(
-    //         docsnapshot => {
-    //             const tile = [];
-    //             docsnapshot.forEach((doc) => {
-    //                 const tiledoc = doc.data();
-    //                 tile.push(tiledoc);
-
-    //             });
-    //             console.log(tile);
-    //             setlecture(tile);
-    //         });
-    // };
     const getShow = async () => {
-        onSnapshot(doc(db, "users", `zJlS7kWn6yMxRuNCv8dgDOhnMAN2`, "show", "setShow"), (doc) => {
+        onSnapshot(doc(db, "users", `${loginuid.current}`, "show", "setShow"), (doc) => {
             console.log(doc.data().show)
             if (doc.data().show === "TimeTable") {
                 getlecd()
@@ -78,7 +66,7 @@ const Homepage = () => {
 
     };
     const getnotice = async () => {
-        onSnapshot(doc(db, "users", `zJlS7kWn6yMxRuNCv8dgDOhnMAN2`, "Notice", "setNotice"), (doc) => {
+        onSnapshot(doc(db, "users", `${loginuid.current}`, "Notice", "setNotice"), (doc) => {
             // console.log(doc.data())
             // console.log(doc.data())
             setNotice(doc.data().notice)
@@ -87,8 +75,10 @@ const Homepage = () => {
     useEffect(() => {
         // getlec();
         getShow()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+    const [current, setcurrent] = useState("")
+
     return (
         <MainDiv>
             {
@@ -98,7 +88,7 @@ const Homepage = () => {
                             lec.length > 0 ?
                                 lec.map((data, i) => {
                                     return (
-                                        <SidebarTiles key={i} data={data} sub={sub} />
+                                        <SidebarTiles id={doc.id} key={i} data={data} sub={sub} current={current} setcurrent={setcurrent} />
 
                                     )
                                 }) :
@@ -109,7 +99,7 @@ const Homepage = () => {
 
 
                     </SideBar>
-                    <DataBar sub={sub} dayr={dayr} customname={customname} />
+                    <DataBar subj={current} dayr={dayr} customname={customname} loginuid={loginuid} />
                 </> :
                     <div className='h-full w-full flex items-center justify-center bg-[#330303]'>
                         <h1 className='text-white text-7xl text-center'>
