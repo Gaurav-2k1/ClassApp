@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import Clock from './Clock';
 import { BsCircleFill } from 'react-icons/bs'
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
