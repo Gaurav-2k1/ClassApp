@@ -6,6 +6,7 @@ import SidebarTiles from '../components/SidebarTile';
 import { db } from '../firebase';
 import { useRef } from 'react';
 import not from '../assets/not.png'
+import Clock from '../components/Clock';
 const Homepage = () => {
 
 
@@ -96,7 +97,7 @@ const Homepage = () => {
                                     <h1 className='text-3xl text-white h-full '>No Data Found</h1>
                                 </>
                         }
-
+                        <Clock dayr={dayr} />
 
                     </SideBar>
                     <DataBar subj={current} dayr={dayr} customname={customname} loginuid={loginuid} />
@@ -135,7 +136,7 @@ const MainDiv = styled.section`
 const SideBar = styled.div`
     height:100%;
     overflow:auto;
-    width:25vw;
+    width:15vw;
     background: rgba(0, 0, 0, 0.72);
     padding: 30px 25px;
     

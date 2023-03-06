@@ -53,12 +53,8 @@ const Clock = ({ dayr }) => {
 
 
 const ClockBlock = styled.div`
-    position:absolute;
-    right:10px;
-    height:50vh;
-    width:30vw;
-    top: -19px;
-
+    
+flex :1;
 background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), rgba(102, 173, 122, 0.2);
 border: 1px solid #686464;
 box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.25);

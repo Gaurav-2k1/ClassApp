@@ -74,7 +74,7 @@ const SideBarTile = styled.div`
    cursor:pointer;
     position:relative;
     margin :1rem 0;
-    padding-left:20px;
+    padding-left:10px;
     height:${({ currentTab, title }) => (currentTab === title ? ' 20%' : '10%')};
     width:100%;
     background: ${({ currentTab, title }) => (currentTab === title ? ' rgba(49, 183, 175, 0.24)' : 'rgba(217, 217, 217, 0.56)')} ;
@@ -122,13 +122,13 @@ const Data = styled.div`
         font-family: 'Inter';
         font-style: normal;
         font-weight: 700;
-        font-size: 1rem;
-        padding:5px 0;
+        font-size: 0.8rem;
+        padding:2px 0;
         text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     };
     h1{
         font-weight: 700;
-font-size: 15px;
+        font-size: 15px;
 
         text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     }
