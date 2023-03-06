@@ -97,8 +97,8 @@ const DataBars = styled.div`
 
 
 const MainDataBlock = styled.div`
-    width:40%;
-    height:30%;
+    width:50%;
+    height:50%;
     border-radius: 0px 0px 42px 0px;
     display:flex;
     flex-direction:column;
@@ -110,10 +110,9 @@ const MainDataBlock = styled.div`
     display:flex;
     align-items:left;
     h1{
-        height:100%;
         margin-top:0.5rem;
         margin-left:0.5rem;
-        font-size:1.5rem;
+        font-size:1rem;
         color:white
     };
 
