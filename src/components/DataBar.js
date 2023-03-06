@@ -97,8 +97,8 @@ const DataBars = styled.div`
 
 
 const MainDataBlock = styled.div`
-    width:50%;
-    height:40%;
+    width:40%;
+    height:30%;
     border-radius: 0px 0px 42px 0px;
     display:flex;
     flex-direction:column;
