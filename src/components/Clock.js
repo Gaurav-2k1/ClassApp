@@ -5,7 +5,7 @@ const Clock = ({ dayr }) => {
     let time = new Date().toLocaleTimeString();
 
     const [currentTime, setCurrentTime] = useState(time);
-    const weekDay = ['Sun', 'Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Sat'];
+    const weekDay = ['Sun', 'Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Satur'];
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'may', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
     const [day, setday] = useState("...");
     const [month, setmonth] = useState("...");

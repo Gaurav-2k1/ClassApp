@@ -8,8 +8,8 @@ import { db } from '../firebase';
 
 const DataBar = ({ subj, dayr, customname, loginuid }) => {
     const [subinfo, setsubinfo] = useState()
-     
-    const weekDay = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
+
+    const weekDay = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Satur'];
 
 
     const getlecdata = async () => {
@@ -32,26 +32,35 @@ const DataBar = ({ subj, dayr, customname, loginuid }) => {
         subj && getlecdata()
     }, [subj])
 
-    console.log(subinfo)
+    console.log(subj)
     return (
         <DataBars >
 
             <Circlediv>
-                <BsCircleFill className='circleIcon' />
-                <BsCircleFill className='circleIcon' />
-                <BsCircleFill className='circleIcon' />
+                <div className='flex flex-row'>
+                    <BsCircleFill className='circleIcon' />
+                    <BsCircleFill className='circleIcon' />
+                    <BsCircleFill className='circleIcon' />
+                </div>
+                
+                <div className='text-3xl text-white mt-4'>
+                    Classroom No : 20
+                </div>
 
             </Circlediv>
+
             <Clock dayr={dayr} />
             <MainDataBlock>
                 {
                     subinfo ? <>
                         {
-                            subinfo.map((data) => {
+                            subinfo.map((data, i) => {
                                 return (
                                     <>
                                         <h1>Subject : {data.subject}</h1>
-                                        <h1>Teacher : {data.teacher}</h1>
+                                        <h1>Faculty : {data.teacher}</h1>
+                                        <h1> Class : BE</h1>
+                                        
                                         <h2>Attendance : 00</h2>
                                     </>
                                 )
@@ -107,7 +116,7 @@ const MainDataBlock = styled.div`
         font-size:1.5rem;
         color:white
     };
-pc
+
     h2{
         height:100%;
         margin : 2rem 0.5rem 0 0.5rem;
@@ -118,12 +127,12 @@ pc
 const Circlediv = styled.div`
     padding:1rem;
     width:100%;
-    height:10%;
+    height:100%;
     position:absolute;
     top:0;
     left:0;
     display:flex;
-    flex-direction:row;
+    flex-direction:column;
     .circleIcon{
         margin:0.2rem;
         font-size:1.5rem;

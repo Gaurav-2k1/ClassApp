@@ -5,7 +5,7 @@ import DataBar from '../components/DataBar';
 import SidebarTiles from '../components/SidebarTile';
 import { db } from '../firebase';
 import { useRef } from 'react';
-
+import not from '../assets/not.png'
 const Homepage = () => {
 
 
@@ -14,7 +14,7 @@ const Homepage = () => {
     const customname = useRef("");
     const [showd, setShowd] = useState(true)
     const dayr = useRef("")
-    const weekDay = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
+    const weekDay = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Satur'];
     const [notice, setNotice] = useState()
     const loginuid = useRef()
     loginuid.current = localStorage.getItem("email")
@@ -102,9 +102,20 @@ const Homepage = () => {
                     <DataBar subj={current} dayr={dayr} customname={customname} loginuid={loginuid} />
                 </> :
                     <div className='h-full w-full flex items-center justify-center bg-[#330303]'>
-                        <h1 className='text-white text-7xl text-center'>
-                            {notice}
-                        </h1>
+
+                        <h1 className='absolute top-10 text-3xl text-white underline'>DR. D. Y. PATIL INSTITUTE OF ENGINEERING,MANAGEMENT & RESEARCH, AKURDI</h1>
+                        <h1 className='text-5xl text-white absolute top-20 mt-4'>Notice</h1>
+
+                        <img src={not} alt="" className='absolute right-10' />
+                        <div className='w-full'>
+                            <div className='w-1/2 ml-10 h-max p-28 border border-solid border-white rounded '>
+                                <h1 className='text-white text-7xl text-center'>
+                                    {notice}
+                                </h1>
+                            </div>
+                        </div>
+
+
                     </div>
             }
 
