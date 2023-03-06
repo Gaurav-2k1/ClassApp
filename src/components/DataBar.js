@@ -105,7 +105,6 @@ const MainDataBlock = styled.div`
     position:absolute;
     top:30vh;
     left:10vw;
-    padding:2rem;
     border:white 1px solid;
     display:flex;
     align-items:left;
@@ -113,13 +112,14 @@ const MainDataBlock = styled.div`
         margin-top:0.5rem;
         margin-left:0.5rem;
         font-size:1rem;
-        color:white
+        color:white;
+        height:100%;
     };
 
     h2{
         height:100%;
-        margin : 2rem 0.5rem 0 0.5rem;
-        font-size:1.5rem;
+        margin-top :10px;
+        font-size:1rem;
         color:white
     }  
 `;
