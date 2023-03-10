@@ -104,13 +104,13 @@ const Homepage = () => {
                 </> :
                     <div className='h-full w-full flex items-center justify-center bg-[#330303]'>
 
-                        <h1 className='absolute top-10 text-3xl text-white underline'>DR. D. Y. PATIL INSTITUTE OF ENGINEERING,MANAGEMENT & RESEARCH, AKURDI</h1>
+                        <h1 className='absolute top-10 text-3xl text-white underline text-center'>DR. D. Y. PATIL INSTITUTE OF ENGINEERING,MANAGEMENT & RESEARCH, AKURDI</h1>
                         <h1 className='text-5xl text-white absolute top-20 mt-4'>Notice</h1>
 
-                        <img src={not} alt="" className='absolute right-10' />
-                        <div className='w-full'>
+                        <img src={not} alt="" className='absolute right-15 w-min' />
+                        <div className='w-full '>
                             <div className='w-1/2 ml-10 h-max p-28 border border-solid border-white rounded '>
-                                <h1 className='text-white text-7xl text-center'>
+                                <h1 className='text-white text-3xl text-center'>
                                     {notice}
                                 </h1>
                             </div>

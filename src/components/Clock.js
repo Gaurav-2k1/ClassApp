@@ -54,7 +54,7 @@ const Clock = ({ dayr }) => {
 
 const ClockBlock = styled.div`
     
-flex :1;
+
 background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), rgba(102, 173, 122, 0.2);
 border: 1px solid #686464;
 box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.25);
@@ -64,9 +64,8 @@ flex-direction:column;
 justify-content:center;
 align-items:center;
 h1{
-    font-size:2rem;
+    font-size:1rem;
     color:white;
-    margin:1rem 0;
     font-weight:bold;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
@@ -83,7 +82,7 @@ const DateBlock = styled.div`
     }
 `;
 const RealtimeClock = styled.h1`
-    margin-top:1rem;
+    margin-top:5px;
     color: #FFFFFF;
 
 text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
