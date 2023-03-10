@@ -54,7 +54,7 @@ const DataBar = ({ subj, dayr, customname, loginuid }) => {
                         {
                             subinfo.map((data, i) => {
                                 return (
-                                    <div className='flex flex-col justify-start mt-14 w-max h-4/5 ml-10'>
+                                    <div className='flex flex-col justify-start mt-14 w-max px-5 h-4/5 ml-10'>
                                         <h1>Subject : {data.subject}</h1>
                                         <h1>Faculty : {data.teacher}</h1>
                                         <h1> Class : BE</h1>
@@ -122,7 +122,7 @@ const MainDataBlock = styled.div`
     h1{
         margin-top:0.5rem;
         margin-left:0.5rem;
-        font-size:3rem;
+        font-size:2.5rem;
         color:white;
         height:100%;
     };
