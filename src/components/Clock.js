@@ -53,22 +53,21 @@ const Clock = ({ dayr }) => {
 
 
 const ClockBlock = styled.div`
-    
-
-background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), rgba(102, 173, 122, 0.2);
-border: 1px solid #686464;
-box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.25);
-border-radius: 5px;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-h1{
-    font-size:1rem;
-    color:white;
-    font-weight:bold;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
+    height:25%;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), rgba(102, 173, 122, 0.2);
+    border: 1px solid #686464;
+    box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    h1{
+        font-size:1rem;
+        color:white;
+        font-weight:bold;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
 `;
 const DateBlock = styled.div`
     margin:10px 0;
@@ -77,7 +76,7 @@ const DateBlock = styled.div`
 
     h2{
         background:#D9D9D9;
-        padding:10px;
+        padding:1px;
         margin:0 5px;
     }
 `;
@@ -85,7 +84,7 @@ const RealtimeClock = styled.h1`
     margin-top:5px;
     color: #FFFFFF;
 
-text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
 `
 

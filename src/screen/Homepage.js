@@ -94,7 +94,7 @@ const Homepage = () => {
                                     )
                                 }) :
                                 <>
-                                    <h1 className='text-3xl text-white h-full '>No Data Found</h1>
+                                    <h1 className='text-3xl text-white h-3/4  text-center'>No Data Found</h1>
                                 </>
                         }
                         <Clock dayr={dayr} />
@@ -104,13 +104,13 @@ const Homepage = () => {
                 </> :
                     <div className='h-full w-full flex items-center justify-center bg-[#330303]'>
 
-                        <h1 className='absolute top-10 text-3xl text-white underline text-center'>DR. D. Y. PATIL INSTITUTE OF ENGINEERING,MANAGEMENT & RESEARCH, AKURDI</h1>
-                        <h1 className='text-5xl text-white absolute top-20 mt-4'>Notice</h1>
+                        <h1 className='absolute top-10 text-2xl text-white underline text-center'>DR. D. Y. PATIL INSTITUTE OF ENGINEERING,MANAGEMENT & RESEARCH, AKURDI</h1>
+                        <h1 className='text-5xl text-white absolute top-24 mt-5'>Notice</h1>
 
-                        <img src={not} alt="" className='absolute right-15 w-min' />
-                        <div className='w-full '>
+                        <img src={not} alt="" className='absolute right-10 w-1/3 mt-10'  />
+                        <div className='w-full mt-16'>
                             <div className='w-1/2 ml-10 h-max p-28 border border-solid border-white rounded '>
-                                <h1 className='text-white text-3xl text-center'>
+                                <h1 className='text-white text-4xl text-center'>
                                     {notice}
                                 </h1>
                             </div>
@@ -134,11 +134,11 @@ const MainDiv = styled.section`
 
 `;
 const SideBar = styled.div`
-    height:100%;
-    overflow:auto;
-    width:15vw;
+    height:75%%;
+    overflow:hidden;
+    width:16vw;
     background: rgba(0, 0, 0, 0.72);
-    padding: 30px 25px;
+    padding: 10px 5px;
     
 
 `;
