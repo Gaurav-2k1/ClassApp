@@ -103,7 +103,7 @@ const OngoingTab = styled.div`;
         font-family: 'Inter';
         font-style: normal;
         font-weight: 600;
-        font-size: 20px;
+        font-size: 13px;
         color: #FFFFFF;
 
 text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -115,6 +115,7 @@ const Data = styled.div`
     width:${({ currentTab, title }) => (currentTab === title ? ' 40%' : '100%')}; 
     color:white;
     display :flex ;
+    padding:0px 2px;
     flex-direction:${({ currentTab, title }) => (currentTab === title ? 'column' : 'row')} ;
     justify-content:${({ currentTab, title }) => (currentTab === title ? '' : 'space-around')};
     align-items: ${({ currentTab, title }) => (currentTab === title ? '' : 'center')};
@@ -122,14 +123,14 @@ const Data = styled.div`
         font-family: 'Inter';
         font-style: normal;
         font-weight: 700;
-        font-size: 0.8rem;
+        font-size:10px;
         padding:2px 0;
         text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    };
+    }
     h1{
         font-weight: 700;
-        font-size: 15px;
-
+        font-size: 10px;
+        margin-left:5px;
         text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     }
 `
