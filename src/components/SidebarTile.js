@@ -112,7 +112,7 @@ text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 const Data = styled.div`
     
     height:${({ currentTab, title }) => (currentTab === title ? '50%' : '100%')};
-    width:${({ currentTab, title }) => (currentTab === title ? ' 40%' : '100%')}; 
+    width:${({ currentTab, title }) => (currentTab === title ? ' 50%' : '100%')}; 
     color:white;
     display :flex ;
     padding:0px 2px;
@@ -130,7 +130,7 @@ const Data = styled.div`
     h1{
         font-weight: 700;
         font-size: 10px;
-        margin-left:5px;
+        margin-left:2px;
         text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     }
 `
