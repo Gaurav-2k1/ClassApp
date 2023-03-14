@@ -5,7 +5,6 @@ import DataBar from '../components/DataBar';
 import SidebarTiles from '../components/SidebarTile';
 import { db } from '../firebase';
 import { useRef } from 'react';
-import not from '../assets/not.png'
 import Clock from '../components/Clock';
 const Homepage = () => {
 
@@ -45,11 +44,12 @@ const Homepage = () => {
         // })
 
     };
-
+    const [log, setlog] = useState(true)
 
     const getShow = async () => {
+
         onSnapshot(doc(db, "users", `${loginuid.current}`, "show", "setShow"), (doc) => {
-            console.log(doc.data().show)
+            setlog(doc.data().log)
             if (doc.data().show === "TimeTable") {
                 getlecd()
                 setShowd(true)
@@ -60,12 +60,14 @@ const Homepage = () => {
 
         })
 
-        // const snapshot = await getDocs(docref)
-        // snapshot.forEach((doc) => {
-        //     tile.push(doc.data())
-        // })
+
 
     };
+    // const logout = async () => {
+    //     onSnapshot(doc(db, "users", `${loginuid.current}`, "web", "login"), (doc) => {
+    //         console.log(doc.data())
+    //     })
+    // }
     const getnotice = async () => {
         onSnapshot(doc(db, "users", `${loginuid.current}`, "Notice", "setNotice"), (doc) => {
             // console.log(doc.data())
@@ -73,11 +75,22 @@ const Homepage = () => {
             setNotice(doc.data().notice)
         })
     }
+
+    const logout = () => {
+        localStorage.removeItem("email")
+        window.location.reload()
+    }
+    const lo = () => {
+
+    }
+    console.log(log)
+
     useEffect(() => {
         // getlec();
         getShow()
+        log ? lo() : logout()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [log])
     const [current, setcurrent] = useState("")
 
     return (
@@ -102,20 +115,27 @@ const Homepage = () => {
                     </SideBar>
                     <DataBar subj={current} dayr={dayr} customname={customname} loginuid={loginuid} />
                 </> :
-                    <div className='h-full w-full flex items-center justify-center bg-[#330303]'>
+                    <div className='h-full w-full flex items-center justify-center bg-[#000000d9]'>
 
                         <h1 className='absolute top-10 text-2xl text-white underline text-center'>DR. D. Y. PATIL INSTITUTE OF ENGINEERING,MANAGEMENT & RESEARCH, AKURDI</h1>
                         <h1 className='text-5xl text-white absolute top-24 mt-5'>Notice</h1>
 
-                        <img src={not} alt="" className='absolute right-10 w-1/3 mt-10'  />
                         <div className='w-full mt-16'>
-                            <div className='w-1/2 ml-10 h-max p-28 border border-solid border-white rounded '>
-                                <h1 className='text-white text-4xl text-center'>
+                            <div className='w-4/5 h-max ml-10 p-28  border border-solid border-white rounded '>
+                                <h1 className='text-white text-7xl text-center'>
                                     {notice}
                                 </h1>
                             </div>
                         </div>
+                        <div className="h-[450px] w-[450px] absolute -bottom-10 -right-20 rounded-full border border-solid border-red-500 flex items-center justify-center
+                 animate-pulse">
+                            <div className=" h-[350px] w-[350px] rounded-full border border-solid border-green-500 flex items-center justify-center">
+                                <div className=" h-[250px] w-[250px] rounded-full border border-solid border-blue-500 flex items-center justify-center text-3xl font-semibold text-white">
+                                    <div className=" h-[150px] w-[150px] rounded-full border border-solid border-yellow-500 flex items-center justify-center text-3xl font-semibold text-white"></div>
 
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
             }
