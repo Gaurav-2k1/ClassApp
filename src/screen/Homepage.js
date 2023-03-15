@@ -14,7 +14,7 @@ const Homepage = () => {
     const customname = useRef("");
     const [showd, setShowd] = useState(true)
     const dayr = useRef("")
-    const weekDay = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Satur'];
+    const weekDay = ['Sun', 'Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Satur'];
     const [notice, setNotice] = useState()
     const loginuid = useRef()
     loginuid.current = localStorage.getItem("email")
@@ -22,10 +22,12 @@ const Homepage = () => {
         onSnapshot(doc(db, "users", `${loginuid.current}`, "web", "docu"), (doc) => {
             customname.current = doc.data().customname;
             const d = new Date()
-
+            console.log(customname.current)
             const day = weekDay[d.getDay()] + "day";
             // console.log(day)
+
             const docref = query(collection(db, "users", `${loginuid.current}`, "timetables", `${customname.current}`, `${day}`));
+            console.log(day)
             onSnapshot(docref, (querySnapshot) => {
                 var tile = [];
 
@@ -49,7 +51,6 @@ const Homepage = () => {
     const getShow = async () => {
 
         onSnapshot(doc(db, "users", `${loginuid.current}`, "show", "setShow"), (doc) => {
-            setlog(doc.data().log)
             if (doc.data().show === "TimeTable") {
                 getlecd()
                 setShowd(true)
@@ -57,6 +58,8 @@ const Homepage = () => {
                 getnotice()
                 setShowd(false)
             }
+            setlog(doc.data().log)
+
 
         })
 
@@ -83,10 +86,21 @@ const Homepage = () => {
     const lo = () => {
 
     }
-    console.log(log)
+    const [classroom, setclassroom] = useState("")
+    const [department, setdepartment] = useState(null)
+    const [college, setcollege] = useState(null);
+    const getdetails = async () => {
+        onSnapshot(doc(db, "users", `${loginuid.current}`), (doc) => {
+            setclassroom(doc.data().classroom)
+            setdepartment(doc.data().Department)
+            setcollege(doc.data().College)
 
+        })
+
+    }
     useEffect(() => {
         // getlec();
+        getdetails()
         getShow()
         log ? lo() : logout()
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -113,7 +127,7 @@ const Homepage = () => {
                         <Clock dayr={dayr} />
 
                     </SideBar>
-                    <DataBar subj={current} dayr={dayr} customname={customname} loginuid={loginuid} />
+                    <DataBar subj={current} dayr={dayr} customname={customname} loginuid={loginuid} classroom={classroom} department={department} college={college} />
                 </> :
                     <div className='h-full w-full flex items-center justify-center bg-[#000000d9]'>
 
@@ -131,7 +145,9 @@ const Homepage = () => {
                  animate-pulse">
                             <div className=" h-[350px] w-[350px] rounded-full border border-solid border-green-500 flex items-center justify-center">
                                 <div className=" h-[250px] w-[250px] rounded-full border border-solid border-blue-500 flex items-center justify-center text-3xl font-semibold text-white">
-                                    <div className=" h-[150px] w-[150px] rounded-full border border-solid border-yellow-500 flex items-center justify-center text-3xl font-semibold text-white"></div>
+                                    <div className=" h-[150px] w-[150px] rounded-full border border-solid border-yellow-500 flex items-center justify-center text-3xl font-semibold text-white">
+                                        <h1 className='text-center '>{college}  {department}</h1>
+                                    </div>
 
                                 </div>
                             </div>

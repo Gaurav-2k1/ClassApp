@@ -4,10 +4,10 @@ import styled from 'styled-components'
 import { BsCircleFill } from 'react-icons/bs'
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
-const DataBar = ({ subj, dayr, customname, loginuid }) => {
-    const [subinfo, setsubinfo] = useState()
+const DataBar = ({ subj, college, department, customname, classroom, loginuid }) => {
+    const [subinfo, setsubinfo] = useState([])
 
-    const weekDay = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Satur'];
+    const weekDay = ['Sun', 'Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Satur'];
 
 
     const getlecdata = async () => {
@@ -30,7 +30,6 @@ const DataBar = ({ subj, dayr, customname, loginuid }) => {
         subj && getlecdata()
     }, [subj])
 
-    console.log(subj)
     return (
         <DataBars >
             <div className='flex flex-row'>
@@ -39,22 +38,27 @@ const DataBar = ({ subj, dayr, customname, loginuid }) => {
                 <BsCircleFill className='circleIcon' />
             </div>
             <Circlediv>
-
-
-                <div className='text-5xl text-white text-center items-center font-semibold'>
-                    Classroom No : 20
+                <div className='flex flex-row justify-around w-full'>
+                    <div className='text-5xl text-white text-center items-center font-semibold'>
+                        Classroom No : {classroom}
+                    </div>
+                    <div className='text-5xl text-white text-center items-center font-semibold  '>
+                        {college}  {department}
+                    </div>
                 </div>
+
+
 
             </Circlediv>
 
             {/* <Clock dayr={dayr} /> */}
             <MainDataBlock>
                 {
-                    subinfo ? <>
+                    subinfo.length ? <>
                         {
                             subinfo.map((data, i) => {
                                 return (
-                                    <div className='flex flex-col justify-start mt-14 w-max px-5 h-4/5 ml-10'>
+                                    <div className='flex flex-col justify-start mt-14 w-max px-5 h-4/5 ml-10' key={i}>
                                         <h1>Subject : {data.subject}</h1>
                                         <h1>Faculty : {data.teacher}</h1>
                                         <h1> Class : BE</h1>
