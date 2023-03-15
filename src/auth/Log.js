@@ -1,4 +1,4 @@
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import React, { useState } from 'react'
 import { db } from '../firebase';
 
@@ -13,13 +13,21 @@ const Log = () => {
             [name]: value
         }));
     }
-    const setEmailaddress = (event) => {
+    const setEmailaddress = async (event) => {
         event.preventDefault();
         localStorage.setItem("email", email.email)
         const docref = doc(db, "users", `${email.email}`, "show", "setShow");
-        updateDoc(docref,{
-            log:true
-        })
+        const docsnap = await getDoc(docref)
+        if (docsnap.exists()) {
+            updateDoc(docref, {
+                log: true
+            })
+        } else {
+            setDoc(docref, {
+                log: true
+            })
+        }
+
         window.location.reload()
     }
     return (
