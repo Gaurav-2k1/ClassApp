@@ -1,4 +1,4 @@
-import { collection, doc, onSnapshot, query } from 'firebase/firestore';
+import { collection, doc, getDoc, onSnapshot, query } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components'
 import DataBar from '../components/DataBar';
@@ -9,7 +9,7 @@ import Clock from '../components/Clock';
 const Homepage = () => {
 
 
-    const [lec, setlec] = useState([])
+    const [lec, setlec] = useState({})
     const sub = useRef("");
     const customname = useRef("");
     const [showd, setShowd] = useState(true)
@@ -22,28 +22,21 @@ const Homepage = () => {
         onSnapshot(doc(db, "users", `${loginuid.current}`, "web", "docu"), (doc) => {
             customname.current = doc.data().customname;
             const d = new Date()
-            console.log(customname.current)
+            // console.log(customname.current)
             const day = weekDay[d.getDay()] + "day";
             // console.log(day)
 
             const docref = query(collection(db, "users", `${loginuid.current}`, "timetables", `${customname.current}`, `${day}`));
-            console.log(day)
             onSnapshot(docref, (querySnapshot) => {
-                var tile = [];
+                var tile = {};
 
                 querySnapshot.forEach((doc) => {
-                    // console.log(doc.data())
-                    tile.push(doc.data())
+                    tile[doc.id] = doc.data()
                 });
                 setlec(tile);
-                console.log(tile)
             });
+            getYearac()
         })
-
-        // const snapshot = await getDocs(docref)
-        // snapshot.forEach((doc) => {
-        //     tile.push(doc.data())
-        // })
 
     };
     const [log, setlog] = useState(true)
@@ -66,15 +59,9 @@ const Homepage = () => {
 
 
     };
-    // const logout = async () => {
-    //     onSnapshot(doc(db, "users", `${loginuid.current}`, "web", "login"), (doc) => {
-    //         console.log(doc.data())
-    //     })
-    // }
+
     const getnotice = async () => {
         onSnapshot(doc(db, "users", `${loginuid.current}`, "Notice", "setNotice"), (doc) => {
-            // console.log(doc.data())
-            // console.log(doc.data())
             setNotice(doc.data().notice)
         })
     }
@@ -94,14 +81,22 @@ const Homepage = () => {
             setclassroom(doc.data().classroom)
             setdepartment(doc.data().Department)
             setcollege(doc.data().College)
+        });
+       
 
+    }
+    const getYearac = async () => {
+        onSnapshot(doc(db, "users", `${loginuid.current}`, "timetables", `${customname.current}`), (doc) => {
+            setYeara(doc.data().year)
         })
 
     }
+    const [year, setYeara] = useState("")
     useEffect(() => {
         // getlec();
         getdetails()
         getShow()
+
         log ? lo() : logout()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [log])
@@ -113,10 +108,10 @@ const Homepage = () => {
                 showd ? <>
                     <SideBar>
                         {
-                            lec.length > 0 ?
-                                lec.map((data, i) => {
+                            lec ?
+                                Object.entries(lec).map(([key, value]) => {
                                     return (
-                                        <SidebarTiles id={doc.id} key={i} data={data} sub={sub} current={current} setcurrent={setcurrent} />
+                                        <SidebarTiles id={key} key={key} data={value} sub={sub} current={current} setcurrent={setcurrent} />
 
                                     )
                                 }) :
@@ -127,15 +122,15 @@ const Homepage = () => {
                         <Clock dayr={dayr} />
 
                     </SideBar>
-                    <DataBar subj={current} dayr={dayr} customname={customname} loginuid={loginuid} classroom={classroom} department={department} college={college} />
+                    <DataBar subj={current} dayr={dayr} customname={customname} loginuid={loginuid} classroom={classroom} department={department} college={college} year={year} />
                 </> :
-                    <div className='h-full w-full flex items-center justify-center bg-[#000000d9]'>
+                    <div className='h-full w-full flex flex-col gap-4 items-center justify-center bg-[#000000d9]'>
 
-                        <h1 className='absolute top-10 text-2xl text-white underline text-center'>DR. D. Y. PATIL INSTITUTE OF ENGINEERING,MANAGEMENT & RESEARCH, AKURDI</h1>
-                        <h1 className='text-5xl text-white absolute top-24 mt-5'>Notice</h1>
+                        <h1 className='text-2xl text-white underline text-center'>DR. D. Y. PATIL INSTITUTE OF ENGINEERING,MANAGEMENT & RESEARCH, AKURDI</h1>
+                        <h1 className='text-5xl text-white '>Notice</h1>
 
-                        <div className='w-full mt-16'>
-                            <div className='w-4/5 h-max ml-10 p-28  border border-solid border-white rounded '>
+                        <div className='w-full '>
+                            <div className='w-3/5 h-max ml-10 p-20  border border-solid border-white rounded '>
                                 <h1 className='text-white text-7xl text-center'>
                                     {notice}
                                 </h1>

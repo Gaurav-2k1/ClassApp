@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { BsCircleFill } from 'react-icons/bs'
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-const DataBar = ({ subj, college, department, customname, classroom, loginuid }) => {
-    const [subinfo, setsubinfo] = useState([])
+const DataBar = ({ subj, college, department, customname, classroom, loginuid, year }) => {
+    const [subinfo, setsubinfo] = useState()
 
     const weekDay = ['Sun', 'Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Satur'];
 
@@ -15,58 +15,52 @@ const DataBar = ({ subj, college, department, customname, classroom, loginuid })
         const d = new Date()
 
         const day = weekDay[d.getDay()] + "day";
-        const docref = query(collection(db, "users", `${loginuid.current}`, "timetables", `${customname.current}`, `${day}`), where("subject", "==", `${subj}`));
-        const snapshot = await getDocs(docref)
-        snapshot.forEach((doc) => {
-            tile.push(doc.data())
-        })
-        console.log(tile)
-        console.log("called")
-        setsubinfo(tile)
+        const docref = doc(db, "users", `${loginuid.current}`, "timetables", `${customname.current}`, `${day}`, `${subj}`);
+        const snapshot = await getDoc(docref)
+        if (snapshot.exists()) {
+            setsubinfo(snapshot.data())
+        }
+
     };
 
 
     useEffect(() => {
         subj && getlecdata()
     }, [subj])
-
     return (
         <DataBars >
-            <div className='flex flex-row'>
+            <div className='flex flex-row my-3'>
                 <BsCircleFill className='circleIcon' />
                 <BsCircleFill className='circleIcon' />
                 <BsCircleFill className='circleIcon' />
+                <Circlediv>
+                    <div className='flex flex-row justify-around w-full'>
+                        <div className='text-4xl text-white text-center items-center font-semibold mx-4'>
+                            Classroom No : {classroom}
+                        </div>
+                        <div className='text-4xl text-white text-center items-center font-semibold  '>
+                            {college}  {department}
+                        </div>
+                    </div>
+                </Circlediv>
             </div>
-            <Circlediv>
-                <div className='flex flex-row justify-around w-full'>
-                    <div className='text-5xl text-white text-center items-center font-semibold'>
-                        Classroom No : {classroom}
-                    </div>
-                    <div className='text-5xl text-white text-center items-center font-semibold  '>
-                        {college}  {department}
-                    </div>
-                </div>
 
 
-
-            </Circlediv>
-
-            {/* <Clock dayr={dayr} /> */}
             <MainDataBlock>
                 {
-                    subinfo.length ? <>
+                    subinfo ? <>
                         {
-                            subinfo.map((data, i) => {
-                                return (
-                                    <div className='flex flex-col justify-start mt-14 w-max px-5 h-4/5 ml-10' key={i}>
-                                        <h1>Subject : {data.subject}</h1>
-                                        <h1>Faculty : {data.teacher}</h1>
-                                        <h1> Class : BE</h1>
+                            subinfo.type === "Theory" ?
+                                <div className='flex flex-col justify-start mt-14 w-max px-5 h-full ml-10'>
+                                    <h1>Subject : {subinfo.subject}</h1>
+                                    <h1>Faculty : {subinfo.teacher}</h1>
+                                    <h1> Class : {year}</h1>
 
-                                        <h2>Attendance : 00</h2>
-                                    </div>
-                                )
-                            })
+                                    <h2>Attendance : 00</h2>
+                                </div> : <div className='w-full h-full flex flex-col items-center '>
+                                    <h1 className='flex items-center text-3xl font-semibold'>Practical Ongoing In Labs</h1>
+                                </div>
+
                         }
 
                     </> :
@@ -100,6 +94,8 @@ const DataBars = styled.div`
     position:relative;
     height:100vh;
     width:85vw;
+    display:flex;
+    flex-direction:column;
     background: rgba(0, 0, 0, 0.85);
     .circleIcon{
         margin:0.2rem;
@@ -111,31 +107,28 @@ const DataBars = styled.div`
 
 const MainDataBlock = styled.div`
     width:80%;
-    height:80%;
+    height:70%;
+    min-height:60%;
     border-radius: 0px 0px 42px 0px;
     display:flex;
     flex-direction:column;
-    position:absolute;
-    top:15%;
-    left:8vw;
     padding-left:10px;
     display:flex;
     border:solid 1px white;
     align-items:center;
+    margin-left:10vw;
 
     h1{
-        margin-top:0.5rem;
         margin-left:0.5rem;
-        font-size:2.5rem;
+        font-size:2rem;
         color:white;
         height:100%;
     };
 
     h2{
         height:100%;
-        margin-top :0.5rem;
         margin-left:0.5rem;
-        font-size:3rem;
+        font-size:2rem;
         color:white
     }  
 `;
@@ -143,9 +136,7 @@ const Circlediv = styled.div`
     padding:1rem;
     width:100%;
     height:100%;
-    position:absolute;
-    top:0;
-    left:0;
+    
     display:flex;
     flex-direction:row;
     justify-content:center;
