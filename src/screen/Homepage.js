@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, onSnapshot, query } from 'firebase/firestore';
+import { collection, doc, onSnapshot, query } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components'
 import DataBar from '../components/DataBar';

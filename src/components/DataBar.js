@@ -11,7 +11,6 @@ const DataBar = ({ subj, college, department, customname, classroom, loginuid, y
 
 
     const getlecdata = async () => {
-        var tile = [];
         const d = new Date()
 
         const day = weekDay[d.getDay()] + "day";
