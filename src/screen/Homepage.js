@@ -6,6 +6,7 @@ import SidebarTiles from '../components/SidebarTile';
 import { db } from '../firebase';
 import { useRef } from 'react';
 import Clock from '../components/Clock';
+
 const Homepage = () => {
 
 
@@ -17,15 +18,14 @@ const Homepage = () => {
     const weekDay = ['Sun', 'Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Satur'];
     const [notice, setNotice] = useState()
     const loginuid = useRef()
+    const count = useRef()
     loginuid.current = localStorage.getItem("email")
     const getlecd = async () => {
         onSnapshot(doc(db, "users", `${loginuid.current}`, "web", "docu"), (doc) => {
             customname.current = doc.data().customname;
             const d = new Date()
-            // console.log(customname.current)
+            count.current = doc.data().count;
             const day = weekDay[d.getDay()] + "day";
-            // console.log(day)
-
             const docref = query(collection(db, "users", `${loginuid.current}`, "timetables", `${customname.current}`, `${day}`));
             onSnapshot(docref, (querySnapshot) => {
                 var tile = {};
@@ -41,6 +41,12 @@ const Homepage = () => {
     };
     const [log, setlog] = useState(true)
 
+    // const searchLive = useQuery(
+    //     ["search-live", "GAURAV"],
+    //     searchLiveCourse,
+    //     {}
+    // );
+    // console.log(searchLive)
     const getShow = async () => {
 
         onSnapshot(doc(db, "users", `${loginuid.current}`, "show", "setShow"), (doc) => {
@@ -82,9 +88,10 @@ const Homepage = () => {
             setdepartment(doc.data().Department)
             setcollege(doc.data().College)
         });
-       
+
 
     }
+
     const getYearac = async () => {
         onSnapshot(doc(db, "users", `${loginuid.current}`, "timetables", `${customname.current}`), (doc) => {
             setYeara(doc.data().year)
@@ -122,7 +129,9 @@ const Homepage = () => {
                         <Clock dayr={dayr} />
 
                     </SideBar>
-                    <DataBar subj={current} dayr={dayr} customname={customname} loginuid={loginuid} classroom={classroom} department={department} college={college} year={year} />
+                    <DataBar subj={current} dayr={dayr} customname={customname} loginuid={loginuid} classroom={classroom} department={department} college={college} year={year}
+                        count={count}
+                    />
                 </> :
                     <div className='h-full w-full flex flex-col gap-4 items-center justify-center bg-[#000000d9]'>
 

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { BsCircleFill } from 'react-icons/bs'
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
-const DataBar = ({ subj, college, department, customname, classroom, loginuid, year }) => {
+const DataBar = ({ subj, college, department, customname, classroom, loginuid, year, count }) => {
     const [subinfo, setsubinfo] = useState()
 
     const weekDay = ['Sun', 'Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Satur'];
@@ -55,7 +55,7 @@ const DataBar = ({ subj, college, department, customname, classroom, loginuid, y
                                     <h1>Faculty : {subinfo.teacher}</h1>
                                     <h1> Class : {year}</h1>
 
-                                    <h2>Attendance : 00</h2>
+                                    <h2>Attendance : {count.current}</h2>
                                 </div> : <div className='w-full h-full flex flex-col items-center '>
                                     <h1 className='flex items-center text-3xl font-semibold'>Practical Ongoing In Labs</h1>
                                 </div>

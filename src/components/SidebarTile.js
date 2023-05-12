@@ -5,10 +5,6 @@ import styled from 'styled-components'
 const SidebarTiles = ({ id, data, current, setcurrent }) => {
     let time = new Date().toLocaleTimeString();
     const [currentTime, setCurrentTime] = useState(time);
-
-    
-
-
     const updateTime = () => {
         let time = new Date().toLocaleTimeString();
 
@@ -21,8 +17,6 @@ const SidebarTiles = ({ id, data, current, setcurrent }) => {
                 setcurrent("")
             }
         }
-
-
     }
     setTimeout(data.subject !== current ? updateTime : " ", 3000);
     useState(() => {
